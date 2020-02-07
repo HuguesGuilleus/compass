@@ -1,7 +1,7 @@
 // Copyright 2020, GUILLEUS Hugues <ghugues@netc.fr>
 // BSD 3-Clause License
 
-const assetsVersion = "v1.0";
+const assetsVersion = "v1.1";
 const assets = [
 	".",
 	"compass.svg",
