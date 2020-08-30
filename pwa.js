@@ -3,34 +3,44 @@
 
 (async function () {
 	if (!('serviceWorker' in navigator)) {
-		console.warn("serviceWorker is not supported");
+		console.warn('serviceWorker is not supported');
 		return;
 	}
-	let reg = await navigator.serviceWorker.register("sw-cache.js");
-	let pwaUpdate = document.getElementById("pwaUpdate");
+
+	const pwdNeedNetwork = document.getElementById('pwdNeedNetwork').innerText;
+	const pwdCurrentUpdate = document.getElementById('pwdCurrentUpdate').innerText;
+
+	function register() {
+		return navigator.serviceWorker.register('sw-cache.js');
+	}
+	let reg = await (navigator.serviceWorker.controller ?
+		navigator.serviceWorker.getRegistration() :
+		register());
+
+	let pwaUpdate = document.getElementById('pwaUpdate');
 	if (!pwaUpdate) {
-		console.warn("There are not #pwaUpdate element.");
+		console.warn('There are not #pwaUpdate element.');
 		return;
 	}
-	pwaUpdate.addEventListener("click", async () => {
+	pwaUpdate.hidden = false;
+	pwaUpdate.addEventListener('click', async () => {
 		if (!navigator.onLine) {
-			window.alert("Vous devez être en ligne pour faire une mise à jour.")
-			pwaUpdate.style.color = "red";
+			window.alert(pwdNeedNetwork);
 			return;
 		}
-		pwaUpdate.style.color = "blue";
+		document.body.innerText = pwdCurrentUpdate;
 		await reg.unregister();
-		await navigator.serviceWorker.register("sw-cache.js");
+		await register();
 		document.location.reload();
 	});
 })();
 
-window.addEventListener("beforeinstallprompt", event => {
-	let b = document.getElementById("pwaInstallation");
+window.addEventListener('beforeinstallprompt', event => {
+	let b = document.getElementById('pwaInstallation');
 	if (!b) {
 		console.warn("There are no #pwaInstallation element");
 		return;
 	}
 	b.hidden = false;
-	b.addEventListener("click", () => event.prompt().catch(console.error));
+	b.addEventListener('click', () => event.prompt().catch(console.error));
 });

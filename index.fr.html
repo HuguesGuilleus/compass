@@ -17,7 +17,7 @@
 	<script src="geo.js"></script>
 
 	<title>Boussole</title>
-	<meta name="description" content="Affiche les coordonées et l'orientaion de l'appareil.">
+	<meta name="description" content="Affiche les coordonées et l'orientation de l'appareil.">
 </head>
 
 <body>
@@ -62,7 +62,9 @@
 
 	<footer>
 		<div class=pwaButtonGroup>
-			<button type=button class=pwaButtonItem id=pwaUpdate>Mise à jour</button>
+			<button type=button class=pwaButtonItem id=pwaUpdate hidden>Mise à jour</button>
+			<p id=pwdNeedNetwork hidden>Vous devez être en ligne pour faire une mise à jour.</p>
+			<p id=pwdCurrentUpdate hidden>Mise à jour en cours...</p>
 			<button type=button class=pwaButtonItem id=pwaInstallation hidden>Installation</button>
 		</div>
 		<div class="license">
